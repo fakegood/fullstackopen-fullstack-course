@@ -25,6 +25,14 @@ const App = () => {
         setVotes(copy);
     }
 
+    function getBestQuote() {
+        const maxIndex = votes.reduce((maxIdx, currentVal, currentIdx, arr) =>
+            currentVal > arr[maxIdx] ? currentIdx : maxIdx, 0
+        );
+
+        return anecdotes[maxIndex];
+    }
+
     return (
         <div>
             <p>{anecdotes[selected]}</p>
@@ -37,6 +45,10 @@ const App = () => {
                 castVote(selected)
             }}>Vote +1
             </button>
+            <div>
+                <h1>Popular Quote</h1>
+                <p>{getBestQuote()}</p>
+            </div>
         </div>
     )
 }
