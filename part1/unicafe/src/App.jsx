@@ -7,6 +7,20 @@ const Statistics = (props) => {
     const average = total === 0 ? 0 : (good - bad) / total;
     const positive = total === 0 ? 0 : (good / total) * 100;
 
+    if(total === 0) {
+        return (
+            <div>
+                <h1>Please provide feedback!</h1>
+                <button onClick={props.onGood}>Good +1</button>
+                <button onClick={props.onNeutral}>Neutral +1</button>
+                <button onClick={props.onBad}>Bad +1</button>
+
+                <h2>Statistics</h2>
+                <p>No feedback given.</p>
+            </div>
+        )
+    }
+
     return (
         <div>
             <h1>Please provide feedback!</h1>
