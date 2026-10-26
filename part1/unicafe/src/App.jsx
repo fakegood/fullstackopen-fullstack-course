@@ -2,9 +2,10 @@ import {useState} from 'react'
 
 const StatisticLine = (props) => {
     return (
-        <div>
-            <p>{props.text}: {props.value}</p>
-        </div>
+        <tr>
+            <td>{props.text}:</td>
+            <td>{props.value}</td>
+        </tr>
     )
 }
 
@@ -15,7 +16,7 @@ const Statistics = (props) => {
     const average = total === 0 ? 0 : (good - bad) / total;
     const positive = total === 0 ? 0 : (good / total) * 100;
 
-    if(total === 0) {
+    if (total === 0) {
         return (
             <div>
                 <h1>Please provide feedback!</h1>
@@ -37,12 +38,17 @@ const Statistics = (props) => {
             <button onClick={props.onBad}>Bad +1</button>
 
             <h2>Statistics</h2>
-            <StatisticLine text="Total Good" value={good} />
-            <StatisticLine text="Total Neutral" value={neutral} />
-            <StatisticLine text="Total Bad" value={bad} />
-            <StatisticLine text="Total Feedback" value={total} />
-            <StatisticLine text="Average" value={average} />
-            <StatisticLine text="Positive" value={positive} />
+            <table>
+                <thead></thead>
+                <tbody>
+                <StatisticLine text="Total Good" value={good}/>
+                <StatisticLine text="Total Neutral" value={neutral}/>
+                <StatisticLine text="Total Bad" value={bad}/>
+                <StatisticLine text="Total Feedback" value={total}/>
+                <StatisticLine text="Average" value={average}/>
+                <StatisticLine text="Positive" value={positive}/>
+                </tbody>
+            </table>
         </div>
     )
 }
@@ -57,8 +63,8 @@ const App = () => {
         <>
             <Statistics good={good} neutral={neutral} bad={bad}
                         onGood={() => setGood(good + 1)}
-                        onNeutral={()=>setNeutral(neutral + 1)}
-                        onBad={()=>setBad(bad + 1)}
+                        onNeutral={() => setNeutral(neutral + 1)}
+                        onBad={() => setBad(bad + 1)}
             />
         </>
     )
