@@ -3,12 +3,15 @@ import Persons from "./components/Persons.jsx";
 import Filter from "./components/Filter.jsx";
 import Form from "./components/Form.jsx";
 import personService from "./helper/PersonService.jsx";
+import Notification from "./components/Notification.jsx";
 
 const App = () => {
     const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [search, setSearch] = useState('')
+    const [message, setMessage] = useState('')
+    const [notificationType, setNotificationType] = useState('')
 
     useEffect(() => {
         personService.getAll().then(res => {
@@ -42,6 +45,8 @@ const App = () => {
 
                         const updatedPerson = persons.map(person => person.id === res.id ? res : person);
                         setPersons(updatedPerson);
+
+                        showMessage(`'${target.name}' updated!`);
                     });
                 }
             } else {
@@ -58,6 +63,8 @@ const App = () => {
             setNewNumber('');
 
             persons.push(res);
+
+            showMessage(`'${res.name}' created!`);
         });
     }
 
@@ -84,13 +91,21 @@ const App = () => {
             personService.deleteEntry(id).then(res => {
                 const newArray = persons.filter(person => person.id !== res.id)
                 setPersons(newArray);
-            });
 
+                showMessage(`'${target.name}' deleted!`, 'error');
+            });
         }
     }
 
+    const showMessage = (message, type = 'info') => {
+        setNotificationType(type);
+        setMessage(message);
+        setTimeout(() => setMessage(''), 3000);
+    };
+
     return (
         <div>
+            <Notification message={message} type={notificationType}/>
             <h2>Phonebook</h2>
             <Filter keyword={search} onChanged={onSearchChanged}/>
             <h3>Edit:</h3>
