@@ -29,8 +29,24 @@ const App = () => {
             return;
         }
 
-        if (persons.some(person => person.name.toLowerCase() === newName.toLowerCase()) === true) {
-            alert(`'${newName}' already exists in phonebook!`);
+        const target = persons.find(person => person.name.toLowerCase() === newName.toLowerCase());
+        if (target) {
+            if (target.number !== newNumber) {
+                const confirmUpdate = confirm(`Are you sure you want to update ${newName}.`);
+                target.number = newNumber;
+                if (confirmUpdate) {
+                    personService.update(target.id, target).then(res => {
+
+                        setNewName('');
+                        setNewNumber('');
+
+                        const updatedPerson = persons.map(person => person.id === res.id ? res : person);
+                        setPersons(updatedPerson);
+                    });
+                }
+            } else {
+                alert(`'${newName}' already exists in phonebook!`);
+            }
             return;
         }
 
@@ -62,7 +78,7 @@ const App = () => {
         const target = persons.find(person => person.id === id);
         if (!target)
             return;
-        
+
         const confirmDeletion = confirm(`Delete '${target.name}'?`,)
         if (confirmDeletion) {
             personService.deleteEntry(id).then(res => {
