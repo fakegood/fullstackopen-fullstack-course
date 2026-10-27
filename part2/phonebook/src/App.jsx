@@ -14,10 +14,14 @@ const App = () => {
     const [notificationType, setNotificationType] = useState('')
 
     useEffect(() => {
+        refreshPersons();
+    }, [])
+
+    const refreshPersons = () => {
         personService.getAll().then(res => {
             setPersons(res);
         })
-    }, [])
+    }
 
     function addName(e) {
         e.preventDefault();
@@ -93,6 +97,11 @@ const App = () => {
                 setPersons(newArray);
 
                 showMessage(`'${target.name}' deleted!`, 'error');
+            }).catch(err => {
+                if (err.status === 404) {
+                    showMessage(`'${target.name}' does not exist in the phonebook anymore.`, 'error');
+                    refreshPersons();
+                }
             });
         }
     }
