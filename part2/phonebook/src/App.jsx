@@ -57,6 +57,22 @@ const App = () => {
         setSearch(e.target.value);
     }
 
+    function onDelete(e, id) {
+        e.preventDefault();
+        const target = persons.find(person => person.id === id);
+        if (!target)
+            return;
+        
+        const confirmDeletion = confirm(`Delete '${target.name}'?`,)
+        if (confirmDeletion) {
+            personService.deleteEntry(id).then(res => {
+                const newArray = persons.filter(person => person.id !== res.id)
+                setPersons(newArray);
+            });
+
+        }
+    }
+
     return (
         <div>
             <h2>Phonebook</h2>
@@ -65,7 +81,7 @@ const App = () => {
             <Form nameInput={newName} numberInput={newNumber}
                   onNameChanged={onNameChanged} onNumberChanged={onNumberChanged}
                   addName={addName}/>
-            <Persons persons={persons} keyword={search}/>
+            <Persons persons={persons} keyword={search} onDelete={onDelete}/>
         </div>
     )
 }
