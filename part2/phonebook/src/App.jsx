@@ -1,15 +1,21 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import Persons from "./components/Persons.jsx";
 import Filter from "./components/Filter.jsx";
 import Form from "./components/Form.jsx";
+import axios from "axios";
 
 const App = () => {
-    const [persons, setPersons] = useState([
-        {name: 'Arto Hellas', number: '34-34-1234567890'}
-    ])
+    const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [search, setSearch] = useState('')
+
+    useEffect(() => {
+        axios.get("http://localhost:3001/persons").then(res => {
+            console.log(res.data)
+            setPersons(res.data);
+        })
+    }, [])
 
     function addName(e) {
         e.preventDefault();
@@ -19,7 +25,7 @@ const App = () => {
             return;
         }
 
-        if (newNumber === ''){
+        if (newNumber === '') {
             alert(`Number cannot be empty!`);
             return;
         }
