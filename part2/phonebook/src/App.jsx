@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import Persons from "./components/Persons.jsx";
 import Filter from "./components/Filter.jsx";
 import Form from "./components/Form.jsx";
-import axios from "axios";
+import personService from "./helper/PersonService.jsx";
 
 const App = () => {
     const [persons, setPersons] = useState([])
@@ -11,9 +11,8 @@ const App = () => {
     const [search, setSearch] = useState('')
 
     useEffect(() => {
-        axios.get("http://localhost:3001/persons").then(res => {
-            console.log(res.data)
-            setPersons(res.data);
+        personService.getAll().then(res => {
+            setPersons(res);
         })
     }, [])
 
@@ -35,9 +34,15 @@ const App = () => {
             return;
         }
 
-        persons.push({name: newName, number: newNumber});
-        setNewName('');
-        setNewNumber('');
+        const newPerson = {name: newName, number: newNumber, id: "5"};
+
+        personService.create(newPerson).then(res => {
+
+            setNewName('');
+            setNewNumber('');
+
+            persons.push(res);
+        });
     }
 
     function onNameChanged(e) {
