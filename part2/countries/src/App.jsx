@@ -42,7 +42,7 @@ const App = () => {
         <div>
             Find: <input onChange={e => setSearch(e.target.value)} placeholder="Enter Country"/>
             <Search result={filteredCountries} onShowDetail={onShowDetail}/>
-            {country && (
+            {country && filteredCountries.length > 1 && (
                 <>
                     <CountryDetail country={country}/>
                     <button onClick={() => setCountry(null)}>Close</button>
