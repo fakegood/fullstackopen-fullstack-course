@@ -1,11 +1,13 @@
 import {useEffect, useMemo, useState} from "react";
 import countryService from "./services/CountryService";
 import Search from "./components/Search";
+import CountryDetail from "./components/CountryDetail.jsx";
 
 const App = () => {
 
     const [search, setSearch] = useState('');
     const [countries, setCountries] = useState(null);
+    const [country, setCountry] = useState(null);
 
     const searchPattern = (country) => {
         if (search === '') {
@@ -29,13 +31,23 @@ const App = () => {
         })
     }, [])
 
+    const onShowDetail = (country) => {
+        setCountry(country)
+    }
+
     if (countries === null)
         return <div>Loading...</div>;
 
     return (
         <div>
             Find: <input onChange={e => setSearch(e.target.value)} placeholder="Enter Country"/>
-            <Search result={filteredCountries}/>
+            <Search result={filteredCountries} onShowDetail={onShowDetail}/>
+            {country && (
+                <>
+                    <CountryDetail country={country}/>
+                    <button onClick={() => setCountry(null)}>Close</button>
+                </>
+            )}
         </div>
     )
 }

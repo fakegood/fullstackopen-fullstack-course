@@ -2,7 +2,7 @@ import CountryList from "./CountryList.jsx";
 import CountryDetail from "./CountryDetail.jsx";
 
 const Search = (props) => {
-    const {result} = props;
+    const {result, onShowDetail} = props;
 
     if(result.length > 10){
         return (
@@ -22,7 +22,7 @@ const Search = (props) => {
 
     return (
         <>
-            {result.map((country, index) => <CountryList key={index} name={country.name.official}/>)}
+            {result.map((country, index) => <CountryList key={index} country={country} onShowDetail={onShowDetail} />)}
         </>
     )
 }

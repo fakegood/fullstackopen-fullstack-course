@@ -1,10 +1,11 @@
 const CountryList = props => {
-    const {name} = props;
+    const {country, onShowDetail} = props;
 
 return (
-    <>
-        <p>{name}</p>
-    </>
+    <div>
+        <button onClick={() => onShowDetail(country)}>View</button>
+        <span>{country.name.official}</span>
+    </div>
 )
 }
 
