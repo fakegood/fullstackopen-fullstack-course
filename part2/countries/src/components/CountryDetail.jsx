@@ -1,6 +1,6 @@
 const CountryDetail = (props) => {
     const {country} = props;
-    console.log(country);
+    
     return (
         <div>
             <h1>{country.name.official}</h1>
@@ -9,9 +9,9 @@ const CountryDetail = (props) => {
                 <p>Area: {country.area}</p>
             </div>
             <h2>Languages</h2>
-            <ui>
-                {Object.entries(country.languages).map(([key, value]) => <li>{value}</li>)}
-            </ui>
+            <ul>
+                {Object.entries(country.languages).map(([key, value]) => <li key={key}>{value}</li>)}
+            </ul>
             <h2>Flag</h2>
             <div>
                 <img src={country.flags.png} alt={country.flags.alt}/>
