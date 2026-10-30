@@ -3,7 +3,17 @@ const morgan = require('morgan');
 const app = express();
 
 app.use(express.json());
-app.use(morgan('tiny'));
+app.use(morgan((token, req, res) => {
+return [
+    token.method(req,res),
+    token.url(req,res),
+    token.status(req,res),
+    token.res(req, res, 'content-length'), '-',
+    token['response-time'](req, res), 'ms',
+    JSON.stringify(req.body)
+].join(' ')
+}));
+
 
 let persons = [
     {
@@ -72,7 +82,7 @@ app.post('/api/persons', (req, res) => {
     }
 
     const existing = persons.find(person => person.name === req.body.name);
-    if (existing){
+    if (existing) {
         return res.status(400).json({errors: `'${existing.name}' already exists!`});
     }
 
