@@ -43,8 +43,10 @@ app.get('/api/persons/:id', (req, res) => {
     const person = json.find(person => person.id === id);
     if (person)
         res.json(person);
-    else
-        res.status(204).end();
+    else {
+        res.statusMessage = `Person ${id} not found!`;
+        res.status(404).end();
+    }
 })
 
 const PORT = process.env.PORT || 3001;
