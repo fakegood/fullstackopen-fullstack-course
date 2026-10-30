@@ -57,7 +57,11 @@ app.delete('/api/persons/:id', (req, res) => {
 })
 
 app.post('/api/persons', (req, res) => {
-    const person = {...req.body, id: `${Math.random() * 8}`};
+    const min = 10000000;
+    const max = 99999999;
+    const eightDigitNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    const person = {...req.body, id: `${eightDigitNumber}`};
     persons.push(person)
 
     res.json(persons);
