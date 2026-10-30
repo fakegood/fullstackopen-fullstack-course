@@ -3,7 +3,7 @@ const app = express();
 
 app.use(express.json());
 
-let json = [
+let persons = [
     {
         "id": "1",
         "name": "Arto Hellas",
@@ -31,16 +31,16 @@ app.get('/', (req, res) => {
 })
 
 app.get('/info', (req, res) => {
-    res.send(`<p>Phonebook has info for ${json.length} people</p><p>${new Date()}</p>`);
+    res.send(`<p>Phonebook has info for ${persons.length} people</p><p>${new Date()}</p>`);
 })
 
 app.get('/api/persons', (req, res) => {
-    res.send(json);
+    res.send(persons);
 })
 
 app.get('/api/persons/:id', (req, res) => {
     const id = req.params.id;
-    const person = json.find(person => person.id === id);
+    const person = persons.find(person => person.id === id);
     if (person)
         res.json(person);
     else {
@@ -51,9 +51,14 @@ app.get('/api/persons/:id', (req, res) => {
 
 app.delete('/api/persons/:id', (req, res) => {
     const id = req.params.id;
-    json = json.filter(person => person.id !== id);
+    persons = persons.filter(person => person.id !== id);
 
     res.status(204).end();
+})
+
+app.post('/api/persons', (req, res) => {
+    persons.push(req.body)
+    res.json(persons);
 })
 
 const PORT = process.env.PORT || 3001;
