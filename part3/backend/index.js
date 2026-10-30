@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 const app = express();
 
 app.use(express.json());
@@ -57,6 +57,23 @@ app.delete('/api/persons/:id', (req, res) => {
 })
 
 app.post('/api/persons', (req, res) => {
+    if (!req.body) {
+        res.status(400).json({error: 'No content found'});
+    }
+
+    if (!req.body.name) {
+        return res.status(400).json({errors: 'Name is required!'});
+    }
+
+    if (!req.body.number) {
+        return res.status(400).json({errors: 'Number is required!'});
+    }
+
+    const existing = persons.find(person => person.name === req.body.name);
+    if (existing){
+        return res.status(400).json({errors: `'${existing.name}' already exists!`});
+    }
+
     const min = 10000000;
     const max = 99999999;
     const eightDigitNumber = Math.floor(Math.random() * (max - min + 1)) + min;
