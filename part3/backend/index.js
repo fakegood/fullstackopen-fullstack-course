@@ -57,7 +57,9 @@ app.delete('/api/persons/:id', (req, res) => {
 })
 
 app.post('/api/persons', (req, res) => {
-    persons.push(req.body)
+    const person = {...req.body, id: `${Math.random() * 8}`};
+    persons.push(person)
+
     res.json(persons);
 })
 
