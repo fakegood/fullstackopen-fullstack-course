@@ -67,7 +67,7 @@ app.delete('/api/persons/:id', (req, res) => {
 
 app.post('/api/persons', (req, res) => {
     if (!req.body) {
-        res.status(400).json({error: 'No content found'});
+        return res.status(400).json({error: 'No content found'});
     }
 
     if (!req.body.name) {
@@ -90,7 +90,7 @@ app.post('/api/persons', (req, res) => {
     const person = {...req.body, id: `${eightDigitNumber}`};
     persons.push(person)
 
-    res.json(persons);
+    res.json(person);
 })
 
 const PORT = process.env.PORT || 3001;
