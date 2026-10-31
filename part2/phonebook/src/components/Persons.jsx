@@ -1,7 +1,7 @@
 const Persons = (props) => {
     const {persons, keyword, onDelete} = props
 
-    let filteredPersons = persons?.length > 0 ? persons.filter(person => person.name.toLowerCase().includes(keyword.toLowerCase())) : [];
+    let filteredPersons = persons && persons.length > 0 ? persons.filter(person => person.name?.toLowerCase().includes(keyword?.toLowerCase())) : [];
 
     return (
         <div>

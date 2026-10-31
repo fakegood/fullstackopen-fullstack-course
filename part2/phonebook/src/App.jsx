@@ -26,12 +26,12 @@ const App = () => {
     function addName(e) {
         e.preventDefault();
 
-        if (newName === '') {
+        if (newName === null || newName === undefined || newName === '') {
             alert(`Name cannot be empty!`);
             return;
         }
 
-        if (newNumber === '') {
+        if (newNumber === null || newNumber === undefined || newNumber === '') {
             alert(`Number cannot be empty!`);
             return;
         }
@@ -59,7 +59,7 @@ const App = () => {
             return;
         }
 
-        const newPerson = {name: newName, number: newNumber, id: "5"};
+        const newPerson = {name: newName, number: newNumber};
 
         personService.create(newPerson).then(res => {
 
