@@ -4,14 +4,14 @@ const app = express();
 
 app.use(express.json());
 app.use(morgan((token, req, res) => {
-return [
-    token.method(req,res),
-    token.url(req,res),
-    token.status(req,res),
-    token.res(req, res, 'content-length'), '-',
-    token['response-time'](req, res), 'ms',
-    JSON.stringify(req.body)
-].join(' ')
+    return [
+        token.method(req, res),
+        token.url(req, res),
+        token.status(req, res),
+        token.res(req, res, 'content-length'), '-',
+        token['response-time'](req, res), 'ms',
+        JSON.stringify(req.body)
+    ].join(' ')
 }));
 app.use(express.static('dist'));
 
@@ -53,6 +53,20 @@ app.get('/api/persons/:id', (req, res) => {
     if (person)
         res.json(person);
     else {
+        res.statusMessage = `Person ${id} not found!`;
+        res.status(404).end();
+    }
+})
+
+app.put('/api/persons/:id', (req, res) => {
+    const id = req.params.id;
+
+    const personIndex = persons.findIndex(person => person.id === id);
+
+    if (personIndex >= 0) {
+        persons[personIndex] = req.body;
+        res.json(req.body);
+    } else {
         res.statusMessage = `Person ${id} not found!`;
         res.status(404).end();
     }
