@@ -40,8 +40,8 @@ const App = () => {
         if (target) {
             if (target.number !== newNumber) {
                 const confirmUpdate = confirm(`Are you sure you want to update ${newName}.`);
-                target.number = newNumber;
                 if (confirmUpdate) {
+                    target.number = newNumber;
                     personService.update(target.id, target).then(res => {
 
                         setNewName('');
