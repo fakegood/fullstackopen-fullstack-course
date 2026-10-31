@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import Persons from "./components/Persons.jsx";
 import Filter from "./components/Filter.jsx";
 import Form from "./components/Form.jsx";
-import personService from "./helper/PersonService.jsx";
+import personService from "./services/PersonService.jsx";
 import Notification from "./components/Notification.jsx";
 
 const App = () => {
